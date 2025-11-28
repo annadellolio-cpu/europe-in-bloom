@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europe in Bloom - Our eTwinning Forest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "🌳";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .language-selector {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #2ecc71;
+        }
+
+        .language-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .language-selector select {
+            padding: 10px 20px;
+            border: 2px solid #2ecc71;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .language-selector select:hover {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .map-section {
+            margin: 40px 0;
+        }
+
+        .map-placeholder {
+            background: #e8f5e9;
+            border: 3px dashed #2ecc71;
+            border-radius: 15px;
+            padding: 60px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .map-placeholder h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .map-instructions {
+            color: #555;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .trees-list {
+            margin-top: 40px;
+        }
+
+        .tree-card {
+            background: #f8f9fa;
+            border-left: 5px solid #2ecc71;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .tree-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .tree-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .tree-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .tree-info h4 {
+            color: #27ae60;
+            margin-bottom: 5px;
+        }
+
+        .tree-details {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            background: #f0f8ff;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .footer-logo {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="mainTitle">Europe in Bloom 🌳</h1>
+            <p class="subtitle" id="mainSubtitle">Our eTwinning Forest - Winter Green Gift Project</p>
+        </div>
+
+        <div class="language-selector">
+            <label for="language" id="langLabel">Choose Language / Scegli la Lingua / Choisir la Langue:</label>
+            <select id="language" onchange="changeLanguage()">
+                <option value="en">English 🇬🇧</option>
+                <option value="it">Italiano 🇮🇹</option>
+                <option value="fr">Français 🇫🇷</option>
+                <option value="ro">Română 🇷🇴</option>
+                <option value="tr">Türkçe 🇹🇷</option>
+                <option value="es">Español 🇪🇸</option>
+            </select>
+        </div>
+
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTrees">0</div>
+                    <div class="stat-label" id="treesLabel">Trees Adopted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCountries">6</div>
+                    <div class="stat-label" id="countriesLabel">Partner Countries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFamilies">0</div>
+                    <div class="stat-label" id="familiesLabel">Families Involved</div>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <h2 id="mapTitle">🗺️ Interactive Map of Our Forest</h2>
+                <div style="position: relative; width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); overflow: hidden; background: #e8f5e9;">
+                    <iframe 
+                        src="https://www.google.com/maps/d/u/0/embed?mid=17ddil9OtU3M8fmUPl0DVHxwtCURpaho" 
+                        width="100%" 
+                        height="600" 
+                        style="border:0; display: block;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 0.9em;">
+                    <a href="https://www.google.com/maps/d/viewer?mid=17ddil9OtU3M8fmUPl0DVHxwtCURpaho" target="_blank" style="color: #2ecc71; text-decoration: none; font-weight: bold;">
+                        🗺️ <span id="openMapText">Open map in full screen</span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="trees-list">
+                <h2 id="treesTitle">🌲 Recently Adopted Trees</h2>
+                
+                <div class="tree-card">
+                    <div class="tree-header">
+                        <div class="tree-icon">🌳</div>
+                        <div class="tree-info">
+                            <h4 id="exampleName">Example: Sofia's Oak Tree</h4>
+                            <p class="tree-details">
+                                <strong id="exampleLocation">Location:</strong> <span id="exampleLocationText">Tuscany, Italy</span><br>
+                                <strong id="exampleDate">Adoption Date:</strong> December 15, 2024<br>
+                                <strong id="exampleSchool">School:</strong> <span id="exampleSchoolText">Primary School "G. Rodari"</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="tree-details" id="exampleMessage">
+                        "We chose this oak because it represents strength and longevity, just like the values we want to pass on to our children." - Sofia's Family
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 id="formTitle">🎁 Adopt Your Tree Today!</h3>
+                <p id="formDescription" style="margin-bottom: 20px; line-height: 1.8;">
+                    Ready to participate? Click the button below to fill out the form and share your tree adoption with our European community. Your contribution will help grow our shared forest!
+                </p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScACwc5Tu9xOwLlxuJ9Nv6YVqLOCOqdOCUusT8-lt39UhXKiw/viewform" target="_blank" class="form-link" id="formButton">📝 Fill Adoption Form</a>
+                <p style="margin-top: 20px; color: #666; font-size: 0.9em;" id="formNote">
+                    <strong id="noteTitle">Note for Teachers:</strong> <span id="noteText">Share this form link with families. All submissions will automatically appear on our shared map!</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">🌍🌳💚</div>
+            <p id="footerText">Together we are growing a greener Europe, one tree at a time.</p>
+            <p style="margin-top: 10px; opacity: 0.8;">eTwinning Winter Green Gift Project 2024-2025</p>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                mainTitle: "Europe in Bloom 🌳",
+                mainSubtitle: "Our eTwinning Forest - Winter Green Gift Project",
+                langLabel: "Choose Language:",
+                treesLabel: "Trees Adopted",
+                countriesLabel: "Partner Countries",
+                familiesLabel: "Families Involved",
+                mapTitle: "🗺️ Interactive Map of Our Forest",
+                mapPlaceholder: "Map Integration Area",
+                mapInstructions: "Here you can integrate your Google My Maps embed code or any other interactive map service. Each tree adopted will appear as a marker on the map with the family's information.",
+                treesTitle: "🌲 Recently Adopted Trees",
+                exampleName: "Example: Sofia's Oak Tree",
+                exampleLocation: "Location:",
+                exampleLocationText: "Tuscany, Italy",
+                exampleDate: "Adoption Date:",
+                exampleSchool: "School:",
+                exampleSchoolText: "Primary School 'G. Rodari'",
+                exampleMessage: "\"We chose this oak because it represents strength and longevity, just like the values we want to pass on to our children.\" - Sofia's Family",
+                formTitle: "🎁 Adopt Your Tree Today!",
+                formDescription: "Ready to participate? Click the button below to fill out the form and share your tree adoption with our European community. Your contribution will help grow our shared forest!",
+                formButton: "📝 Fill Adoption Form",
+                openMapText: "Open map in full screen",
+                noteTitle: "Note for Teachers:",
+                noteText: "Share this form link with families. All submissions will automatically appear on our shared map!",
+                footerText: "Together we are growing a greener Europe, one tree at a time."
+            },
+            it: {
+                mainTitle: "L'Europa in Fiore 🌳",
+                mainSubtitle: "La Nostra Foresta eTwinning - Progetto Regalo Verde Invernale",
+                langLabel: "Scegli la Lingua:",
+                treesLabel: "Alberi Adottati",
+                countriesLabel: "Paesi Partner",
+                familiesLabel: "Famiglie Coinvolte",
+                mapTitle: "🗺️ Mappa Interattiva della Nostra Foresta",
+                mapPlaceholder: "Area di Integrazione Mappa",
+                mapInstructions: "Qui puoi integrare il codice embed di Google My Maps o qualsiasi altro servizio di mappe interattive. Ogni albero adottato apparirà come un marcatore sulla mappa con le informazioni della famiglia.",
+                treesTitle: "🌲 Alberi Recentemente Adottati",
+                exampleName: "Esempio: La Quercia di Sofia",
+                exampleLocation: "Località:",
+                exampleLocationText: "Toscana, Italia",
+                exampleDate: "Data di Adozione:",
+                exampleSchool: "Scuola:",
+                exampleSchoolText: "Scuola Primaria 'G. Rodari'",
+                exampleMessage: "\"Abbiamo scelto questa quercia perché rappresenta forza e longevità, proprio come i valori che vogliamo trasmettere ai nostri figli.\" - La Famiglia di Sofia",
+                formTitle: "🎁 Adotta il Tuo Albero Oggi!",
+                formDescription: "Pronto a partecipare? Clicca il pulsante qui sotto per compilare il modulo e condividere la tua adozione con la nostra comunità europea. Il tuo contributo aiuterà a far crescere la nostra foresta condivisa!",
+                formButton: "📝 Compila Modulo di Adozione",
+                openMapText: "Apri la mappa a schermo intero",
+                noteTitle: "Nota per gli Insegnanti:",
+                noteText: "Condividi questo link del modulo con le famiglie. Tutti gli invii appariranno automaticamente sulla nostra mappa condivisa!",
+                footerText: "Insieme stiamo facendo crescere un'Europa più verde, un albero alla volta."
+            },
+            fr: {
+                mainTitle: "L'Europe en Fleurs 🌳",
+                mainSubtitle: "Notre Forêt eTwinning - Projet Cadeau Vert d'Hiver",
+                langLabel: "Choisir la Langue:",
+                treesLabel: "Arbres Adoptés",
+                countriesLabel: "Pays Partenaires",
+                familiesLabel: "Familles Impliquées",
+                mapTitle: "🗺️ Carte Interactive de Notre Forêt",
+                mapPlaceholder: "Zone d'Intégration de la Carte",
+                mapInstructions: "Ici, vous pouvez intégrer le code d'intégration de Google My Maps ou tout autre service de carte interactive. Chaque arbre adopté apparaîtra comme un marqueur sur la carte avec les informations de la famille.",
+                treesTitle: "🌲 Arbres Récemment Adoptés",
+                exampleName: "Exemple: Le Chêne de Sofia",
+                exampleLocation: "Lieu:",
+                exampleLocationText: "Toscane, Italie",
+                exampleDate: "Date d'Adoption:",
+                exampleSchool: "École:",
+                exampleSchoolText: "École Primaire 'G. Rodari'",
+                exampleMessage: "\"Nous avons choisi ce chêne car il représente la force et la longévité, tout comme les valeurs que nous voulons transmettre à nos enfants.\" - La Famille de Sofia",
+                formTitle: "🎁 Adoptez Votre Arbre Aujourd'hui!",
+                formDescription: "Prêt à participer? Cliquez sur le bouton ci-dessous pour remplir le formulaire et partager votre adoption d'arbre avec notre communauté européenne. Votre contribution aidera à faire grandir notre forêt commune!",
+                formButton: "📝 Remplir le Formulaire d'Adoption",
+                openMapText: "Ouvrir la carte en plein écran",
+                noteTitle: "Note pour les Enseignants:",
+                noteText: "Partagez ce lien de formulaire avec les familles. Toutes les soumissions apparaîtront automatiquement sur notre carte partagée!",
+                footerText: "Ensemble, nous cultivons une Europe plus verte, un arbre à la fois."
+            },
+            ro: {
+                mainTitle: "Europa în Floare 🌳",
+                mainSubtitle: "Pădurea Noastră eTwinning - Proiectul Cadou Verde de Iarnă",
+                langLabel: "Alege Limba:",
+                treesLabel: "Copaci Adoptați",
+                countriesLabel: "Țări Partenere",
+                familiesLabel: "Familii Implicate",
+                mapTitle: "🗺️ Harta Interactivă a Pădurii Noastre",
+                mapPlaceholder: "Zona de Integrare a Hărții",
+                mapInstructions: "Aici puteți integra codul de încorporare Google My Maps sau orice alt serviciu de hartă interactivă. Fiecare copac adoptat va apărea ca un marcator pe hartă cu informațiile familiei.",
+                treesTitle: "🌲 Copaci Recent Adoptați",
+                exampleName: "Exemplu: Stejarul Sofiei",
+                exampleLocation: "Locație:",
+                exampleLocationText: "Toscana, Italia",
+                exampleDate: "Data Adopției:",
+                exampleSchool: "Școala:",
+                exampleSchoolText: "Școala Primară 'G. Rodari'",
+                exampleMessage: "\"Am ales acest stejar pentru că reprezintă puterea și longevitatea, la fel ca valorile pe care vrem să le transmitem copiilor noștri.\" - Familia Sofiei",
+                formTitle: "🎁 Adoptă Copacul Tău Astăzi!",
+                formDescription: "Gata să participi? Faceți clic pe butonul de mai jos pentru a completa formularul și a împărtăși adopția copacului cu comunitatea noastră europeană. Contribuția ta va ajuta la creșterea pădurii noastre comune!",
+                formButton: "📝 Completează Formularul de Adopție",
+                openMapText: "Deschide harta pe ecran complet",
+                noteTitle: "Notă pentru Profesori:",
+                noteText: "Distribuiți acest link de formular cu familiile. Toate trimiterile vor apărea automat pe harta noastră comună!",
+                footerText: "Împreună cultivăm o Europă mai verde, câte un copac o dată."
+            },
+            tr: {
+                mainTitle: "Çiçek Açan Avrupa 🌳",
+                mainSubtitle: "eTwinning Ormanımız - Kış Yeşil Hediye Projesi",
+                langLabel: "Dil Seçin:",
+                treesLabel: "Sahiplenilen Ağaçlar",
+                countriesLabel: "Ortak Ülkeler",
+                familiesLabel: "Katılan Aileler",
+                mapTitle: "🗺️ Ormanımızın İnteraktif Haritası",
+                mapPlaceholder: "Harita Entegrasyon Alanı",
+                mapInstructions: "Buraya Google My Maps gömme kodunu veya başka bir interaktif harita hizmetini entegre edebilirsiniz. Sahiplenilen her ağaç, ailenin bilgileriyle birlikte harita üzerinde bir işaretleyici olarak görünecektir.",
+                treesTitle: "🌲 Son Sahiplenilen Ağaçlar",
+                exampleName: "Örnek: Sofia'nın Meşe Ağacı",
+                exampleLocation: "Konum:",
+                exampleLocationText: "Toskana, İtalya",
+                exampleDate: "Sahiplenme Tarihi:",
+                exampleSchool: "Okul:",
+                exampleSchoolText: "İlkokul 'G. Rodari'",
+                exampleMessage: "\"Bu meşe ağacını seçtik çünkü güç ve uzun ömürlülüğü temsil ediyor, tıpkı çocuklarımıza aktarmak istediğimiz değerler gibi.\" - Sofia'nın Ailesi",
+                formTitle: "🎁 Bugün Ağacınızı Sahiplenin!",
+                formDescription: "Katılmaya hazır mısınız? Formu doldurmak ve ağaç sahiplenmenizi Avrupa topluluğumuzla paylaşmak için aşağıdaki düğmeye tıklayın. Katkınız ortak ormanımızın büyümesine yardımcı olacak!",
+                formButton: "📝 Sahiplenme Formunu Doldurun",
+                openMapText: "Haritayı tam ekranda aç",
+                noteTitle: "Öğretmenler için Not:",
+                noteText: "Bu form bağlantısını ailelerle paylaşın. Tüm gönderimler otomatik olarak ortak haritamızda görünecektir!",
+                footerText: "Birlikte, her seferinde bir ağaç olmak üzere daha yeşil bir Avrupa yetiştiriyoruz."
+            },
+            es: {
+                mainTitle: "Europa en Flor 🌳",
+                mainSubtitle: "Nuestro Bosque eTwinning - Proyecto Regalo Verde de Invierno",
+                langLabel: "Elegir Idioma:",
+                treesLabel: "Árboles Adoptados",
+                countriesLabel: "Países Socios",
+                familiesLabel: "Familias Involucradas",
+                mapTitle: "🗺️ Mapa Interactivo de Nuestro Bosque",
+                mapPlaceholder: "Área de Integración del Mapa",
+                mapInstructions: "Aquí puede integrar el código de inserción de Google My Maps o cualquier otro servicio de mapa interactivo. Cada árbol adoptado aparecerá como un marcador en el mapa con la información de la familia.",
+                treesTitle: "🌲 Árboles Recientemente Adoptados",
+                exampleName: "Ejemplo: El Roble de Sofía",
+                exampleLocation: "Ubicación:",
+                exampleLocationText: "Toscana, Italia",
+                exampleDate: "Fecha de Adopción:",
+                exampleSchool: "Escuela:",
+                exampleSchoolText: "Escuela Primaria 'G. Rodari'",
+                exampleMessage: "\"Elegimos este roble porque representa fuerza y longevidad, al igual que los valores que queremos transmitir a nuestros hijos.\" - La Familia de Sofía",
+                formTitle: "🎁 ¡Adopta Tu Árbol Hoy!",
+                formDescription: "¿Listo para participar? Haz clic en el botón de abajo para completar el formulario y compartir tu adopción de árbol con nuestra comunidad europea. ¡Tu contribución ayudará a hacer crecer nuestro bosque compartido!",
+                formButton: "📝 Completar Formulario de Adopción",
+                openMapText: "Abrir mapa en pantalla completa",
+                noteTitle: "Nota para Profesores:",
+                noteText: "Comparte este enlace del formulario con las familias. ¡Todos los envíos aparecerán automáticamente en nuestro mapa compartido!",
+                footerText: "Juntos estamos cultivando una Europa más verde, un árbol a la vez."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('language').value;
+            const t = translations[lang];
+            
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            document.getElementById('langLabel').textContent = t.langLabel;
+            document.getElementById('treesLabel').textContent = t.treesLabel;
+            document.getElementById('countriesLabel').textContent = t.countriesLabel;
+            document.getElementById('familiesLabel').textContent = t.familiesLabel;
+            document.getElementById('mapTitle').textContent = t.mapTitle;
+            document.getElementById('mapPlaceholder').textContent = t.mapPlaceholder;
+            document.getElementById('mapInstructions').textContent = t.mapInstructions;
+            document.getElementById('treesTitle').textContent = t.treesTitle;
+            document.getElementById('exampleName').textContent = t.exampleName;
+            document.getElementById('exampleLocation').textContent = t.exampleLocation;
+            document.getElementById('exampleLocationText').textContent = t.exampleLocationText;
+            document.getElementById('exampleDate').textContent = t.exampleDate;
+            document.getElementById('exampleSchool').textContent = t.exampleSchool;
+            document.getElementById('exampleSchoolText').textContent = t.exampleSchoolText;
+            document.getElementById('exampleMessage').textContent = t.exampleMessage;
+            document.getElementById('formTitle').textContent = t.formTitle;
+            document.getElementById('formDescription').textContent = t.formDescription;
+            document.getElementById('formButton').textContent = t.formButton;
+            document.getElementById('openMapText').textContent = t.openMapText;
+            document.getElementById('noteTitle').textContent = t.noteTitle;
+            document.getElementById('noteText').textContent = t.noteText;
+        }
+
+        // Simulate updating tree counter (you can connect this to your actual data)
+        let treeCount = 0;
+        function updateTreeCount() {
+            treeCount++;
+            document.getElementById('totalTrees').textContent = treeCount;
+            document.getElementById('totalFamilies').textContent = treeCount;
+        }
+
+        // Update count every 5 seconds for demo (remove in production)
+        setInterval(() => {
+            if (treeCount < 50) updateTreeCount();
+        }, 5000);
+    </script>
+</body>
+</html>
